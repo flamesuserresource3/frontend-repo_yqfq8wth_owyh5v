@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Hero3D from "./components/Hero3D";
 import DashboardSummary from "./components/DashboardSummary";
 import InventoryTable from "./components/InventoryTable";
+import AlertsPanel from "./components/AlertsPanel";
 
 export default function App() {
   return (
@@ -14,6 +15,11 @@ export default function App() {
         </div>
 
         <DashboardSummary />
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AlertsPanel />
+        </div>
+
         <InventoryTable />
 
         <section id="b2b" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
