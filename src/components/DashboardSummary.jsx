@@ -1,36 +1,34 @@
-import { Package, AlertTriangle, Clock, BarChart3, Truck } from "lucide-react";
+import { AlertTriangle, CheckCircle, Clock, Truck } from "lucide-react";
 
-const SummaryCard = ({ icon: Icon, label, value, trend, tone }) => (
-  <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-    <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-transparent pointer-events-none" />
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className={`h-10 w-10 rounded-xl grid place-content-center text-white ${
-          tone === "danger" ? "bg-rose-500" : tone === "warn" ? "bg-amber-500" : tone === "ok" ? "bg-emerald-500" : "bg-indigo-600"
-        }`}>
-          <Icon className="h-5 w-5" />
-        </div>
-        <div>
-          <p className="text-xs uppercase tracking-wide text-slate-500">{label}</p>
-          <p className="text-xl font-semibold text-slate-900">{value}</p>
-        </div>
+const StatCard = ({ icon: Icon, label, value, tone }) => {
+  const tones = {
+    neutral: "bg-slate-50 text-slate-800 border-slate-200",
+    good: "bg-emerald-50 text-emerald-800 border-emerald-200",
+    warn: "bg-amber-50 text-amber-800 border-amber-200",
+    danger: "bg-rose-50 text-rose-800 border-rose-200",
+  };
+  return (
+    <div className={`flex items-center gap-3 rounded-xl border ${tones[tone]} p-4`}> 
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/70 shadow-sm">
+        <Icon className="h-5 w-5" />
       </div>
-      {trend && (
-        <span className={`text-xs font-medium ${trend > 0 ? "text-emerald-600" : "text-rose-600"}`}>
-          {trend > 0 ? "+" : ""}{trend}%
-        </span>
-      )}
+      <div>
+        <p className="text-xs font-medium text-slate-500">{label}</p>
+        <p className="text-lg font-semibold tracking-tight">{value}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function DashboardSummary() {
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <SummaryCard icon={Package} label="Total SKUs" value="1,284" trend={3.2} />
-      <SummaryCard icon={AlertTriangle} label="Low Stock" value="37" trend={-1.1} tone="warn" />
-      <SummaryCard icon={Clock} label="Near Expiry (<14d)" value="62" tone="danger" />
-      <SummaryCard icon={Truck} label="Warehouse Turnover" value="4.8x" tone="ok" />
+    <section id="overview" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard icon={CheckCircle} label="In-stock SKUs" value="1,248" tone="neutral" />
+        <StatCard icon={AlertTriangle} label="Low stock" value="37" tone="warn" />
+        <StatCard icon={Clock} label="Near expiry (30d)" value="22" tone="danger" />
+        <StatCard icon={Truck} label="Inbound shipments" value="8" tone="good" />
+      </div>
     </section>
   );
 }
